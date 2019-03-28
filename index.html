@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Canvas Assignment</title>
+
+    <style>
+        canvas {
+        border:2px solid black;
+        background-color:rgb(231, 247, 245);
+    }
+
+</style>
+</head>
+<!-- <script>
+    function resizeCanvas() {
+        var canvas = document.getElementById("canvas");
+        canvas.width = 0.80*window.innerWidth;
+        canvas.height = 0.80*window.innerHeight;
+    }
+    </script> -->
+<body onresize="resizeCanvas();" onload= "resizeCanvas();">
+<canvas id= "canvas">
+
+</canvas> 
+
+<input type="color" id="colorpicker" value="#ff0000">
+
+
+<script>
+function updateFirst(e) {
+   color = e.target.value; 
+}
+
+
+function resizeCanvas() {
+    var canvas = document.getElementById("canvas");
+    canvas.width = 0.80*window.innerWidth;
+    canvas.height = 0.80*window.innerHeight;
+}
+
+// Global Variables Assignment
+let log= console.log;
+var myCanvas= document.querySelector("canvas");
+var colorPicker= document.querySelector("colorpicker")
+var ctx= canvas.getContext("2d");
+var x= 0
+var y= 0
+var radius= 5
+var color= "red";
+
+
+// Declaring my function
+function draw(){
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    ctx.fillStyle= color;
+    ctx.fill();
+}
+
+// Add Event Listeners
+function movement(e) {
+    console.log(e.pageX);
+    console.log(e.pageY);
+    x= e.pageX
+    y= e.pageY
+    draw();
+}
+
+
+window.addEventListener('mousemove', movement)  
+window.addEventListener('touchmove', movement) 
+
+
+window.addEventListener("keyup", function (e){
+
+    console.log(e.keyCode)
+    if(e.keyCode==66) {
+        color= "blue";
+    }
+    else if(e.keyCode==71){
+        color= "green";
+    }
+    else if(e.keyCode==82){
+        color= "red";
+    }
+    else if(e.keyCode==89){
+        color= "yellow";
+    }
+    else if (e.keyCode==38){
+        radius++;
+    }
+    else if (e.keyCode==40){
+        radius--;
+    }
+    else if (e.keyCode==32){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    draw();
+
+});
+
+function doOnOrientationChange() {
+    resizeCanvas();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+window.addEventListener('orientationchange', doOnOrientationChange);
+
+colorPicker.addEventListener("input", updateFirst);
+</script>
+    
+</body>
+</html>
